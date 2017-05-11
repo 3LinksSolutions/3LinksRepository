@@ -15,7 +15,7 @@ namespace _3LinksSoul.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Your application description pagetset.";
 
             return View();
         }
