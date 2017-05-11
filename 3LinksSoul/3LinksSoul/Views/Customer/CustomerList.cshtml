@@ -1,0 +1,70 @@
+﻿@model IEnumerable<_3LinksSoul.Models.Customers>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CustomerList</title>
+    <link href="~/Content/AutoComplete/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Content/AutoComplete/jquery-1.12.4.js"></script>
+    <script src="~/Content/AutoComplete/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#searchText").autocomplete({
+                source: '@Url.Action("AutoCustomerList")'
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div> 
+        @using (Html.BeginForm())
+        { 
+            <input type="text" id="searchText" name="searchText" />
+        }
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    @*<th>Customer Id</th>*@
+                    <th>Comapny Name</th>
+                    <th>Contact Name</th>
+                    <th>Contact Title</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    @*<th>Region</th>
+                    <th>Postal Code</th>*@
+                    <th>Country</th>
+                    <th>Phone</th>
+                    @*<th>Fax</th>
+                    <th>Action</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @*<td>@Html.DisplayFor(modelItem => item.CustomerID)</td>*@
+                        <td>@Html.DisplayFor(modelItem => item.CompanyName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ContactName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ContactTitle)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.City)</td>
+                        @*<td>@Html.DisplayFor(modelItem => item.Region)</td>
+                        <td>@Html.DisplayFor(modelItem => item.PostalCode)</td>*@
+                        <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                        @*<td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Fax)</td>*@
+                        <td></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

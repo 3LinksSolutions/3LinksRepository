@@ -23,9 +23,17 @@ namespace _3LinksSoul
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/AutoComplete").Include(
+                    "~/Content/AutoComplete/jquery-1.12.4.js",
+                    "~/Content/AutoComplete/jquery-ui.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/AutoComplete/jquery-ui.css",
                       "~/Content/site.css"));
+
+            
+
         }
     }
 }
