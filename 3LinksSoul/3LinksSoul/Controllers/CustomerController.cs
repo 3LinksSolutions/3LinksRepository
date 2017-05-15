@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using _3LinksSoul.Models;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Web.UI;
 
 namespace _3LinksSoul.Controllers
 {
@@ -19,21 +22,42 @@ namespace _3LinksSoul.Controllers
             return View(db.Customers.ToList());
         }
 
-       public ActionResult CustomerListing()
+        public ActionResult CustomerListing(string searchText)
        {
-           return View(db.Customers.ToList());
-       }
+           return View(db.GetCustomer(searchText).ToList());
+        }
 
-        //[HttpPost]
         public JsonResult AutoCustomerList(string term)
         {
-            //var categ = (from n in db.Customers.ToList() where n.ContactName.StartsWith(Prefix) select new { n.ContactName });
             List<string>Cust;
-
             Cust = db.Customers.Where(x => x.ContactName.StartsWith(term)).Select(e => e.ContactName).Distinct().ToList();
-
-            //return Json(categ.ToList(), JsonRequestBehavior.AllowGet);
             return Json(Cust, JsonRequestBehavior.AllowGet);
+        }
+
+        //public ActionResult ExportExcel(string searchText)
+        public ActionResult ExportExcel()
+        {
+            var grid = new GridView();
+            grid.DataSource = db.Customers.ToList();
+            //grid.DataSource = db.GetCustomer(searchText).ToList();
+            grid.DataBind();
+
+            Response.ClearContent();
+            Response.Buffer = true;
+            Response.AddHeader("content-disposition", "attachment; filename=Customer.xls");
+            Response.ContentType = "application/ms-excel";
+
+            Response.Charset = "";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+
+            grid.RenderControl(htw);
+
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+
+            return View("");
         }
 	}
 }
